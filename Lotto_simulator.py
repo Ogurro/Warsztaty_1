@@ -14,10 +14,10 @@ def check_input(check_numb, numb_list):
         return check_numb not in numb_list and 0 < check_numb < 50
 
 
-def check_win(check_numbs, numbs):
+def check_win(check_numbs, win_numbs):
     rv = 0
     for i in range(6):
-        if check_numbs[i] in numbs:
+        if check_numbs[i] in win_numbs:
             rv += 1
     if rv > 2:
         print(f'Winner, You got {rv} numbers!')
@@ -38,11 +38,22 @@ def get_user_numbers():
     return numb_list
 
 
+def print_numbers(list_of_numbs):
+    print(' '.join(map(str, list_of_numbs)))
+
+
+def sort(func):
+    return lambda: sorted(func())
+
+
+sorted_get_user_numbers = sort(get_user_numbers)
+sorted_generate_winning_numbers = sort(generate_winning_numbers)
+
 if __name__ == '__main__':
-    user_numbers = sorted(get_user_numbers())
-    win_numb = sorted(generate_winning_numbers())
+    user_numbs = sorted_get_user_numbers()
+    winning_numbs = sorted_generate_winning_numbers()
 
-    print("Your numbers: {}".format(' '.join(map(str, user_numbers))))
-    print("Wining numbers {}".format(' '.join(map(str, win_numb))))
+    print_numbers(user_numbs)
+    print_numbers(winning_numbs)
 
-    check_win(user_numbers, win_numb)
+    check_win(user_numbs, winning_numbs)
